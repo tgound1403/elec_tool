@@ -3,51 +3,64 @@ import "./index.css";
 
 export default function App() {
   //Total money 
-  const [total, setTotal] = useState();
+  const [total, setTotal] = useState(0);
   // Number of KWh use by air conditioner
-  const [vyKwh, setVyKwh] = useState();
-  const [duongKwh, setDuongKwh] = useState();
-  const [thachKwh, setThachKwh] = useState();
-  const [phucKwh, setPhucKwh] = useState();
+  const [vyKwh, setVyKwh] = useState(0);
+  const [duongKwh, setDuongKwh] = useState(0);
+  const [thachKwh, setThachKwh] = useState(0);
+  const [phucKwh, setPhucKwh] = useState(0);
 
   // Air conditioner money
-  let [duongAir, setDuongAir] = useState();
-  let [vyAir, setVyAir] = useState();
-  let [thachAir, setThachAir] = useState();
-  let [phucAir, setPhucAir] = useState();
+  let [duongAir, setDuongAir] = useState(0);
+  let [vyAir, setVyAir] = useState(0);
+  let [thachAir, setThachAir] = useState(0);
+  let [phucAir, setPhucAir] = useState(0);
 
   // Money after minus air conditioner's money
-  let [duongMoney, setDuongMoney] = useState();
-  let [vyMoney, setVyMoney] = useState();
-  let [thachMoney, setThachMoney] = useState();
-  let [phucMoney, setPhucMoney] = useState();
+  let [duongMoney, setDuongMoney] = useState(0);
+  let [vyMoney, setVyMoney] = useState(0);
+  let [thachMoney, setThachMoney] = useState(0);
+  let [phucMoney, setPhucMoney] = useState(0);
+  
+  let defaultPrice = 3500;
+
+  let vyCount = 4;
+  let duongCount = 3;
+  let thachCount = 1;
+  let phucCount = 1;
+
+  const currentDate = new Date();
+const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+const currentYear = currentDate.getFullYear();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let defaultPrice = 3500;
 
     setDuongAir(duongKwh * defaultPrice);
     setVyAir(vyKwh * defaultPrice);
     setThachAir(thachKwh * defaultPrice);
     setPhucAir(phucKwh * defaultPrice);
 
-    //* Vy's room: 4
-    //* Duong's room: 3
-    //* Phuc's room: 1
-    //* Thach's room: 1
-    let personalPrice = (total - vyAir - duongAir - thachAir - phucAir) / 9;
+    
+    let personalPrice = (total - vyAir - duongAir - thachAir - phucAir) / (vyCount + phucCount + duongCount + thachCount);
 
-    setVyMoney(vyAir + personalPrice * 4);
-    setDuongMoney(duongAir + personalPrice * 3);
-    setPhucMoney(phucAir + personalPrice * 1);
-    setThachMoney(thachAir + personalPrice * 1);
+    setVyMoney((vyAir + personalPrice * vyCount));
+    setDuongMoney((duongAir + personalPrice * duongCount));
+    setPhucMoney((phucAir + personalPrice * phucCount));
+    setThachMoney((thachAir + personalPrice * thachCount));
   };
 
   return (
-    <div className="flex flex-col p-8 xl:px-96 mx-auto  h-screen">
-      <p className=" h1 font-bold xl:text-6xl text-4xl mb-16 mx-auto">
-        ⚡ Máy tính tiền điện A1707 ⚡
+    <div className="flex flex-col p-8 xl:px-96 mx-auto  h-screen bg-slate-200">
+      <p className="font-bold xl:text-6xl text-2xl mb-16 mx-auto text-center">
+        ⚡Tiền điện A1707 {currentMonth-1}/{currentYear}⚡
       </p>
+      <div className='flex flex-row gap-8 bg-slate-800 p-2 mb-4 rounded-lg justify-center'>
+      <p className='text-pink-400'>Phòng Vy: {vyCount} người</p>
+      <p className='text-sky-400'>Phòng Dương: {duongCount} người</p>
+      <p className='text-rose-400'>Phòng Phúc: {phucCount} người</p>
+      <p className='text-amber-400'>Phòng Thạch: {thachCount} người</p>
+      </div>
       <label className="text-2xl font-bold mb-1" htmlFor="vyKwh">
         Tổng tiền điện
       </label>
@@ -56,6 +69,8 @@ export default function App() {
         className="px-4 py-2 rounded-lg  border-2"
         type="text"
       />
+      <p>Đơn giá 1 Kwh: {defaultPrice.toLocaleString()}</p>
+      
       <form className="flex flex-col my-8 w-full" onSubmit={handleSubmit}>
         <div className="flex flex-row flex-wrap xl:flex-nowrap gap-4">
           {" "}
@@ -71,7 +86,7 @@ export default function App() {
               className="px-4 py-2 rounded-lg  border-2"
               type="text"
             />
-            <p>Máy lạnh của Vy: {vyAir}</p>
+            <p>Máy lạnh của Vy: {vyAir.toLocaleString()}</p>
           </div>
           <div className="flex flex-col xl:w-1/4">
             <label
@@ -85,7 +100,7 @@ export default function App() {
               onChange={(e) => setDuongKwh(e.target.value)}
               type="text"
             />
-            <p>Máy lạnh của Dương: {duongAir}</p>
+            <p>Máy lạnh của Dương: {duongAir.toLocaleString()}</p>
           </div>
           <div className="flex flex-col xl:w-1/4">
             <label
@@ -99,7 +114,7 @@ export default function App() {
               onChange={(e) => setPhucKwh(e.target.value)}
               type="text"
             />
-            <p>Máy lạnh của Phúc: {phucAir}</p>
+            <p>Máy lạnh của Phúc: {phucAir.toLocaleString()}</p>
           </div>
           <div className="flex flex-col xl:w-1/4">
             <label
@@ -113,11 +128,11 @@ export default function App() {
               onChange={(e) => setThachKwh(e.target.value)}
               type="text"
             />
-            <p>Máy lạnh của Thạch: {thachAir}</p>
+            <p>Máy lạnh của Thạch: {thachAir.toLocaleString()}</p>
           </div>
         </div>
         <input
-          className="px-4 py-2 rounded-lg my-16 bg-white hover:bg-blue-500 border-2 hover:border-blue-500 hover:text-white cursor-pointer"
+          className="px-4 py-2 rounded-lg my-16 bg-blue-600 text-white hover:bg-blue-500 border-2 cursor-pointer"
           type="submit"
           value="Tính toán"
         />
@@ -125,12 +140,12 @@ export default function App() {
       <div className="text-xl flex flex-col font-bold gap-2">
         <p className="font-medium">
           Tiền điện mỗi người sau khi trừ máy lạnh:{" "}
-          {(total - vyAir - duongAir - thachAir - phucAir) / 10}
+          {((total - vyAir - duongAir - thachAir - phucAir) / 10).toLocaleString()}
         </p>
-        <p className="text-pink-400">Tổng tiền điện phòng Vy: {vyMoney}</p>
-        <p className="text-sky-500">Tổng tiền điện phòng Dương: {duongMoney}</p>
-        <p className="text-rose-500">Tổng tiền điện phòng Phúc: {phucMoney}</p>
-        <p className="text-amber-500">Tổng tiền điện phòng Thạch: {thachMoney}</p>
+        <p className="text-pink-400">Tổng tiền điện phòng Vy: {vyMoney.toLocaleString()}</p>
+        <p className="text-sky-500">Tổng tiền điện phòng Dương: {duongMoney.toLocaleString()}</p>
+        <p className="text-rose-500">Tổng tiền điện phòng Phúc: {phucMoney.toLocaleString()}</p>
+        <p className="text-amber-500">Tổng tiền điện phòng Thạch: {thachMoney.toLocaleString()}</p>
       </div>
     </div>
   );
