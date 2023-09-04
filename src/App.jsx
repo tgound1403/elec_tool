@@ -51,7 +51,7 @@ const currentYear = currentDate.getFullYear();
   };
 
   return (
-    <div className="flex flex-col p-8 xl:px-96 mx-auto  h-screen bg-slate-200">
+    <div className="flex flex-col p-8 xl:px-96 mx-auto h-full xl:h-screen bg-slate-200">
       <p className="font-bold xl:text-6xl text-2xl mb-16 mx-auto text-center">
         ⚡Tiền điện A1707 {currentMonth-1}/{currentYear}⚡
       </p>
