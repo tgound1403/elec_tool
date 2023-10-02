@@ -24,14 +24,15 @@ export default function App() {
   
   let defaultPrice = 3500;
 
-  let vyCount = 4;
-  let duongCount = 3;
+  let vyCount = 5;
+  let duongCount = 2;
   let thachCount = 1;
   let phucCount = 1;
+  let personalPrice = 0;
 
   const currentDate = new Date();
-const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
-const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+  const currentYear = currentDate.getFullYear();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,7 +43,7 @@ const currentYear = currentDate.getFullYear();
     setPhucAir(phucKwh * defaultPrice);
 
     
-    let personalPrice = (total - vyAir - duongAir - thachAir - phucAir) / (vyCount + phucCount + duongCount + thachCount);
+    personalPrice = (total - vyAir - duongAir - thachAir - phucAir) / (vyCount + phucCount + duongCount + thachCount);
 
     setVyMoney((vyAir + personalPrice * vyCount));
     setDuongMoney((duongAir + personalPrice * duongCount));
@@ -140,7 +141,7 @@ const currentYear = currentDate.getFullYear();
       <div className="text-xl flex flex-col font-bold gap-2">
         <p className="font-medium">
           Tiền điện mỗi người sau khi trừ máy lạnh:{" "}
-          {((total - vyAir - duongAir - thachAir - phucAir) / 10).toLocaleString()}
+          {((total - vyAir - duongAir - thachAir - phucAir) / (vyCount + duongCount + thachCount + phucCount)).toLocaleString()}
         </p>
         <p className="text-pink-400">Tổng tiền điện phòng Vy: {vyMoney.toLocaleString()}</p>
         <p className="text-sky-500">Tổng tiền điện phòng Dương: {duongMoney.toLocaleString()}</p>
