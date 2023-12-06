@@ -24,7 +24,7 @@ export default function App() {
   
   let defaultPrice = 3500;
 
-  let vyCount = 5;
+  let vyCount = 4;
   let duongCount = 2;
   let thachCount = 1;
   let phucCount = 1;
